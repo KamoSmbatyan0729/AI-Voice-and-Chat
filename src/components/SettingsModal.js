@@ -9,6 +9,7 @@ import {
   Button,
   FormControl,
   FormLabel,
+  FormHelperText,
   Switch,
   Select,
   Slider,
@@ -16,11 +17,18 @@ import {
   SliderTrack,
   SliderThumb,
   HStack,
+  useColorModeValue,
+  Box
 } from '@chakra-ui/react';
 import { useSettings } from '../context/SettingsContext';
 
 export default function SettingsModal({ isOpen, onClose }) {
   const { voiceEnabled, micEnabled, speechRate, language, voiceType, setSettings } = useSettings();
+
+  // const bgColor = useColorModeValue("white", "gray.800");
+  // const textColor = useColorModeValue("gray.900", "white");
+  // const borderColor = useColorModeValue("gray.200", "gray.700");
+  const secondaryTextColor = useColorModeValue("gray.600", "gray.400");
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -29,10 +37,15 @@ export default function SettingsModal({ isOpen, onClose }) {
         <ModalHeader>Settings</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <FormControl display="flex" alignItems="center" mb={4}>
-            <FormLabel htmlFor="voiceEnabled" mb="0">
-              Voice Output
-            </FormLabel>
+          <FormControl display="flex" alignItems="center" justifyContent="space-between" mb={4}>
+            <Box>
+              <FormLabel htmlFor="voiceEnabled" mb="0">
+                Voice Output
+              </FormLabel>
+              <FormHelperText mt={0} color={secondaryTextColor}>
+                Enable text-to-speech for AI responses
+              </FormHelperText>
+            </Box>
             <Switch
               id="voiceEnabled"
               isChecked={voiceEnabled}
@@ -40,10 +53,15 @@ export default function SettingsModal({ isOpen, onClose }) {
             />
           </FormControl>
 
-          <FormControl display="flex" alignItems="center" mb={4}>
-            <FormLabel htmlFor="micEnabled" mb="0">
-              Voice Input
-            </FormLabel>
+          <FormControl display="flex" alignItems="center" justifyContent="space-between" mb={4}>
+            <Box>
+              <FormLabel htmlFor="micEnabled" mb="0">
+                Voice Input
+              </FormLabel>
+              <FormHelperText mt={0} color={secondaryTextColor}>
+                Enable speech-to-text functionality
+              </FormHelperText>
+            </Box>
             <Switch
               id="micEnabled"
               isChecked={micEnabled}
@@ -64,7 +82,6 @@ export default function SettingsModal({ isOpen, onClose }) {
               <option value="de-DE">German (DE)</option>
               <option value="hi-IN">Hindi (IN)</option>
               <option value="ja-JP">Japanese (JP)</option>
-              <option value="ko-KR">Korean (KR)</option>
               <option value="zh-CN">Chinese (CN)</option>
             </Select>
           </FormControl>

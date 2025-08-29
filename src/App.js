@@ -11,7 +11,7 @@ import { useSpeechSynthesis } from './hooks/useSpeech'
 
 function InnerApp() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const { addAssistantMessage, messages } = useChat();
+  const { addAssistantMessage, clearHistory, messages } = useChat();
   const { speak } = useSpeechSynthesis();
 
   const sendToAI = async (text) => {
@@ -31,7 +31,7 @@ function InnerApp() {
 
   return (
     <VStack h="100vh" w="100vw" spacing={0} align="stretch" position="fixed" top={0} left={0}>
-      <Header onOpenSettings={() => setIsSettingsOpen(true)} />
+      <Header onOpenSettings={() => setIsSettingsOpen(true)} onClearHistory={() => clearHistory()} />
       <ChatWindow />
       <InputBar onSend={sendToAI} />
       <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />

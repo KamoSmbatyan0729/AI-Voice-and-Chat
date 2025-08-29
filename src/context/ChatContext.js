@@ -17,23 +17,16 @@ import React, { createContext, useContext, useMemo, useState } from "react";
 const ChatContext = createContext(undefined);
 
 export function ChatProvider({ children }) {
-  const [messages, setMessages] = useState(() => {
-    try {
-      const saved = localStorage.getItem("chat_history");
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [messages, setMessages] = useState([]);
 
-  const persist = (next) => {
-    setMessages(next);
-    try {
-      localStorage.setItem("chat_history", JSON.stringify(next));
-    } catch {
-      // Ignore localStorage errors
-    }
-  };
+  // const persist = (next) => {
+  //   setMessages(next);
+  //   try {
+  //     localStorage.setItem("chat_history", JSON.stringify(next));
+  //   } catch {
+  //     // Ignore localStorage errors
+  //   }
+  // };
 
   const addUserMessage = (content) => {
     const message = {
@@ -42,7 +35,8 @@ export function ChatProvider({ children }) {
       content,
       timestamp: Date.now(),
     };
-    persist([...messages, message]);
+
+    setMessages(prev => [...prev, message]);
   };
 
   const addAssistantMessage = (content) => {
@@ -52,13 +46,13 @@ export function ChatProvider({ children }) {
       content,
       timestamp: Date.now(),
     };
-    persist([...messages, message]);
+    setMessages(prev => [...prev, message]);
   };
 
-  const clear = () => persist([]);
+  const clearHistory = () => setMessages([]);
 
   const value = useMemo(
-    () => ({ messages, addUserMessage, addAssistantMessage, clear }),
+    () => ({ messages, addUserMessage, addAssistantMessage, clearHistory }),
     [messages]
   );
 
