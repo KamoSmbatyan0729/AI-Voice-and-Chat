@@ -28,7 +28,7 @@ export function useSpeechRecognition() {
     }
   }, [language]);
 
-  const start = useCallback(() => {
+  const startListening = useCallback(() => {
     if (!isSupported || !micEnabled) return;
     setTranscript('');
     try {
@@ -39,7 +39,7 @@ export function useSpeechRecognition() {
     }
   }, [isSupported, micEnabled]);
 
-  const stop = useCallback(() => {
+  const stopListening = useCallback(() => {
     try {
       recognitionRef.current?.stop();
     } catch {
@@ -47,7 +47,7 @@ export function useSpeechRecognition() {
     }
   }, []);
 
-  return { isSupported, listening, transcript, start, stop };
+  return { isSupported, listening, transcript, startListening, stopListening, setListening };
 }
 
 export function useSpeechSynthesis() {

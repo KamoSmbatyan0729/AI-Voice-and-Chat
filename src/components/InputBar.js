@@ -1,12 +1,12 @@
 import { HStack, IconButton, Input } from '@chakra-ui/react';
-import { FaMicrophone, FaStop, FaPaperPlane } from 'react-icons/fa';
+import { FaPaperPlane } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import { useChat } from '../context/ChatContext';
 import { useSpeechRecognition } from '../hooks/useSpeech';
 
 export default function InputBar({ onSend }) {
   const [text, setText] = useState('');
-  const { listening, transcript, start, stop } = useSpeechRecognition();
+  const { listening, transcript } = useSpeechRecognition();
   const { addUserMessage } = useChat();
 
   // Update text as transcript comes in
@@ -41,12 +41,7 @@ export default function InputBar({ onSend }) {
         onKeyDown={(e) => e.key === 'Enter' && submit()} 
         flex={1}
       />
-      <IconButton
-        aria-label={listening ? 'Stop recording' : 'Start recording'}
-        icon={listening ? <FaStop /> : <FaMicrophone />}
-        onClick={() => (listening ? stop() : start())}
-        colorScheme={listening ? 'red' : 'gray'}
-      />
+      
       <IconButton
         aria-label="Send message"
         icon={<FaPaperPlane />}
