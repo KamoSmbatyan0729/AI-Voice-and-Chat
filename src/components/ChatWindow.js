@@ -19,7 +19,7 @@ export default function ChatWindow() {
           <Box 
             key={m.id} 
             display="flex"
-            justifyContent={m.role === 'user' ? 'flex-end' : 'flex-start'}
+            justifyContent={m.role === 'user' ? 'flex-start' : 'flex-end'}
             width="100%"
           >
             <Box

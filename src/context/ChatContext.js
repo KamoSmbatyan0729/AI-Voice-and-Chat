@@ -1,32 +1,9 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
 
-/**
- * @typedef {Object} ConversationMessage
- * @property {string} id
- * @property {"user" | "assistant"} role
- * @property {string} content
- * @property {number} timestamp
- */
-
-/** @type {React.Context<{
- *   messages: ConversationMessage[],
- *   addUserMessage: (content: string) => void,
- *   addAssistantMessage: (content: string) => void,
- *   clear: () => void
- * } | undefined>} */
-const ChatContext = createContext(undefined);
+const ChatContext = createContext(null);
 
 export function ChatProvider({ children }) {
   const [messages, setMessages] = useState([]);
-
-  // const persist = (next) => {
-  //   setMessages(next);
-  //   try {
-  //     localStorage.setItem("chat_history", JSON.stringify(next));
-  //   } catch {
-  //     // Ignore localStorage errors
-  //   }
-  // };
 
   const addUserMessage = (content) => {
     const message = {
