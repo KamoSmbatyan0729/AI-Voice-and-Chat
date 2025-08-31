@@ -4,17 +4,15 @@ import Header from './components/Header'
 import ChatWindow from './components/ChatWindow'
 import InputBar from './components/InputBar'
 import SettingsModal from './components/SettingsModal'
-import VoiceControls from './components/VoiceControls'
 import { SettingsProvider } from './context/SettingsContext'
 import { ChatProvider, useChat } from './context/ChatContext'
 import { createChatCompletion } from './lib/openai'
-import { useSpeechRecognition, useSpeechSynthesis } from './hooks/useSpeech'
+import { useSpeechSynthesis } from './hooks/useSpeech'
 
 function InnerApp() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const { addAssistantMessage, clearHistory, messages } = useChat();
   const { speak } = useSpeechSynthesis();
-  const { listening, startListening, stopListening, setListening } = useSpeechRecognition();
 
   const sendToAI = async (text) => {
     try {
@@ -31,29 +29,12 @@ function InnerApp() {
     }
   };
 
-  const toggleListening = () => {
-    console.log("toggleListening", listening);
-    if (listening) {
-      stopListening();
-      setListening(false);
-    } else {
-      startListening();
-      setListening(true);
-    }
-  };
-
   return (
     <VStack h="100vh" w="100vw" spacing={0} align="stretch" position="fixed" top={0} left={0}>
       <Header onOpenSettings={() => setIsSettingsOpen(true)} onClearHistory={() => clearHistory()} />
       <ChatWindow />
       <InputBar onSend={sendToAI} />
-      <VoiceControls
-        isListening={listening}
-        onToggleListening={toggleListening}
-      />
-      <SettingsModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)} />
+      <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </VStack>
   )
 }
