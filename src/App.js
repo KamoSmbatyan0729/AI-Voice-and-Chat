@@ -6,13 +6,14 @@ import InputBar from './components/InputBar'
 import SettingsModal from './components/SettingsModal'
 import { SettingsProvider } from './context/SettingsContext'
 import { ChatProvider, useChat } from './context/ChatContext'
+import { useSpeechSynthesisContext, SpeechSynthesisProvider } from './context/SpeechSynthesisContext';
 import { createChatCompletion } from './lib/openai'
-import { useSpeechSynthesis } from './hooks/useSpeech'
+
 
 function InnerApp() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const { addAssistantMessage, clearHistory, messages } = useChat();
-  const { speak } = useSpeechSynthesis();
+  const { speak } = useSpeechSynthesisContext();
 
   const sendToAI = async (text) => {
     try {
@@ -41,10 +42,12 @@ function InnerApp() {
 
 export default function App() {
   return (
-    <SettingsProvider>
-      <ChatProvider>
-        <InnerApp />
-      </ChatProvider>
-    </SettingsProvider>
+    <SpeechSynthesisProvider>
+      <SettingsProvider>
+        <ChatProvider>
+          <InnerApp />
+        </ChatProvider>
+      </SettingsProvider>
+    </SpeechSynthesisProvider>
   );
 }

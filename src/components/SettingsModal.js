@@ -25,9 +25,6 @@ import { useSettings } from '../context/SettingsContext';
 export default function SettingsModal({ isOpen, onClose }) {
   const { voiceEnabled, micEnabled, speechRate, language, voiceType, setSettings } = useSettings();
 
-  // const bgColor = useColorModeValue("white", "gray.800");
-  // const textColor = useColorModeValue("gray.900", "white");
-  // const borderColor = useColorModeValue("gray.200", "gray.700");
   const secondaryTextColor = useColorModeValue("gray.600", "gray.400");
 
   return (

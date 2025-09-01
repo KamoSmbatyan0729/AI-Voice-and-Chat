@@ -1,21 +1,23 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, useEffect,  useContext, useMemo, useState } from 'react';
 
 // Default settings
 const defaultSettings = {
   voiceEnabled: true,
   micEnabled: true,
   speechRate: 1.0, // 0.5 - 2.0
-  language: "en-US",
+  language: "zh-CN",
   voiceType: "female", // 'female' or 'male'
 };
 
 // Create context
 const SettingsContext = createContext({
   ...defaultSettings,
-  setSettings: () => {}, // placeholder
+  setSettings: () => { }, // placeholder
 });
 
 export function SettingsProvider({ children }) {
+ 
+
   const [settings, setSettingsState] = useState(() => {
     try {
       const saved = localStorage.getItem('app_settings');
@@ -24,6 +26,10 @@ export function SettingsProvider({ children }) {
       return defaultSettings;
     }
   });
+
+   useEffect(() => {
+    console.log('Settings changed:', settings);
+  }, [settings]);
 
   const setSettings = (next) => {
     setSettingsState((prev) => {
