@@ -5,8 +5,8 @@ const defaultSettings = {
   voiceEnabled: true,
   micEnabled: true,
   speechRate: 1.0, // 0.5 - 2.0
-  language: "zh-CN",
-  voiceType: "female", // 'female' or 'male'
+  language: "en-US", // BCP-47 language tag
+  voiceType: "male", // 'female' or 'male'
 };
 
 // Create context
